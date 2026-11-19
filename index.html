@@ -13,7 +13,8 @@ header{background:var(--azul);color:#fff;padding:22px 16px}header .in{max-width:
 header h1{margin:4px 0 6px;font-size:1.9em;text-transform:uppercase}header p{margin:0;color:#c2d9ff}
 header .ante{color:var(--rosa)}
 nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #c2d9ff;z-index:5}
-nav .in{max-width:780px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto;white-space:nowrap}
+nav .in{max-width:780px;margin:0 auto;padding:8px 16px;display:flex;gap:8px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}nav .in::-webkit-scrollbar{display:none}
+.envio{margin-top:12px;font-size:.92em;color:#fff}.btn.claro{background:#fff;color:var(--azul)}
 nav a{text-decoration:none;font-weight:700;font-size:.85em;background:var(--c88);border-radius:99px;padding:6px 12px}
 .plato{font-size:1.35em;text-transform:uppercase;margin:28px 0 10px;border-bottom:2px solid var(--c88);padding-bottom:4px}
 .plato span{color:var(--cielo);margin-right:8px}
@@ -32,7 +33,9 @@ html,body{max-width:100%;overflow-x:hidden}main,.card,.prompt,p,li,td{overflow-w
 @media (max-width:600px){header h1{font-size:1.45em}.plato{font-size:1.15em}body{font-size:16px}}
 </style></head><body>
 <header><div class="in"><div class="ante">Unidad de Cultura Científica · UFV · Grado en Nutrición · 23-nov-2026</div>
-<h1>Comunicar la nutrición</h1><p>La guía de la clase, en el mismo orden que la presentación. Pulsad <b>Copiar</b> y pegad en vuestro chat.</p></div></header>
+<h1>Comunicar la nutrición</h1><p>La guía de la clase, en el mismo orden que la presentación. Pulsad <b>Copiar</b> y pegad en vuestro chat.</p>
+<div class="envio"><b>¿La queréis también en el ordenador?</b><br>
+<button class="btn claro" id="copiarEnlace">Copiar enlace</button><a class="btn claro" id="wa" target="_blank">WhatsApp</a><a class="btn claro" id="mail">Correo</a><button class="btn claro" id="compartir" hidden>Compartir</button></div></div></header>
 <nav><div class="in"><a href="#p1">Práctica 1</a><a href="#p2">Práctica 2</a><a href="#p3">Práctica 3</a><a href="#p4">Práctica 4</a><a href="#reto">Reto</a><a href="#ejemplos">Ejemplos</a><a href="#seguir">Para seguir</a></div></nav>
 <main>
 <div class="plato"><span>0</span>Para empezar</div>
@@ -96,6 +99,15 @@ Introduction: Primary dysmenorrhea (PD) affects a high percentage of women of re
 <footer>Unidad de Cultura Científica (UCC+i) · Vicerrectorado de Investigación · Universidad Francisco de Vitoria</footer>
 </main>
 <script>
+const URL_WEB = 'https://azarias92.github.io/clase-nutricion-ufv/';
+const MSG = 'Guía de la clase «Comunicar la nutrición» (prompts y ejemplos): ' + URL_WEB;
+document.getElementById('wa').href = 'https://wa.me/?text=' + encodeURIComponent(MSG);
+document.getElementById('mail').href = 'mailto:?subject=' + encodeURIComponent('Guía de la clase: Comunicar la nutrición') + '&body=' + encodeURIComponent(MSG);
+document.getElementById('copiarEnlace').addEventListener('click', async e => {
+  try { await navigator.clipboard.writeText(URL_WEB) } catch(_) {}
+  e.target.textContent = '¡Enlace copiado!'; setTimeout(() => e.target.textContent = 'Copiar enlace', 1600) });
+if (navigator.share) { const b = document.getElementById('compartir'); b.hidden = false;
+  b.addEventListener('click', () => navigator.share({title: 'Comunicar la nutrición', text: 'Guía de la clase', url: URL_WEB}).catch(() => {})) }
 document.querySelectorAll('[data-copia]').forEach(b=>b.addEventListener('click',async()=>{
  const t=b.dataset.copia, o=b.textContent;
  try{await navigator.clipboard.writeText(t)}catch(_){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}
